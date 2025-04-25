@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="style1.css">
+  <script type="text/javascript" src="validation.js" defer></script>
+  <style type="text/css">
+    
+    * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(to right, #d4f3ef, #4aaf7c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  text-align: center;
+  color: #4aaf7c;
+  animation: fadeSlideIn 1s ease-out forwards;
+  opacity: 0;
+}
+
+/* Animation Keyframes */
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.wrapper {
+  background: #e8fff9;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  width: 900px;
+  max-width: 95%;
+}
+
+/* Left Side - Illustration style */
+.left-panel {
+  background: url("https://images.pexels.com/photos/4386339/pexels-photo-4386339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2") center/cover no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+/* Form Section */
+form {
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form div {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #d0eae0;
+  border-radius: 10px;
+  padding: 10px;
+  gap: 10px;
+}
+
+form input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  font-size: 1em;
+  background: transparent;
+  color: #333;
+}
+
+form label svg, form label span {
+  color: #4aaf7c;
+}
+
+button[type="submit"] {
+  background: #4aaf7c;
+  color: white;
+  font-size: 1.1em;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button[type="submit"]:hover {
+  background: #3c9364;
+}
+
+p {
+  text-align: center;
+  color: #555;
+  margin-top: 15px;
+}
+
+a {
+  color: #4aaf7c;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#error-message {
+  color: red;
+  padding: 10px;
+  text-align: center;
+}
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #4aaf7c;
+}
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Login</h1>
+    <p id="error-message"></p>
+    <form id="form">
+      <div>
+        <label for="Username-input">
+          <span></span>
+        </label>
+        <input type="Username" name="Username" id="Username-input" placeholder="Username">
+        <div style="align-items: center; justify-content: start;">
+  <input type="checkbox" id="remember-checkbox">
+  <label for="remember-checkbox">Remember Me</label>
+</div>
+
+      </div>
+      <div>
+        <label for="password-input">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/></svg>
+        </label>
+        <input type="password" name="password" id="password-input" placeholder="Password">
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <p>New here? <a href="signup.html">Create an Account</a></p>
+  </div>
+  <script type="text/javascript">
+    
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const usernameInput = document.getElementById("Username-input");
+    const rememberCheckbox = document.getElementById("remember-checkbox");
+    const form = document.getElementById("form");
+
+    // Autofill if remembered
+    if (localStorage.getItem("rememberUsername") === "true") {
+      usernameInput.value = localStorage.getItem("savedUsername") || "";
+      rememberCheckbox.checked = true;
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault(); // Remove this line if your validation.js already handles it
+
+      if (rememberCheckbox.checked) {
+        localStorage.setItem("savedUsername", usernameInput.value);
+        localStorage.setItem("rememberUsername", "true");
+      } else {
+        localStorage.removeItem("savedUsername");
+        localStorage.setItem("rememberUsername", "false");
+      }
+
+      // Continue with form submission logic here (e.g., validate, send request, etc.)
+    });
+  });
+</script>
+
+  </script>
+</body>
+</html>
