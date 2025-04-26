@@ -1,1 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Currency Converter</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Bricolage Grotesque', sans-serif;
+    }
 
+    h1 {
+      font-size: 5em;
+      font-weight: bold;
+      text-align: center;
+      margin: .5em 0;
+      line-height: .8;
+    }
+
+    .container {
+      margin: auto;
+      min-height: 100vh;
+      background-color: #202020;
+      padding: 2em 0;
+      color: #040203;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .currency-container {
+      height: fit-content;
+      background-color: #7cb889;
+      padding: 3em;
+      border-radius: 40px;
+    }
+
+    .currency {
+      margin-top: 50px;
+      padding: 20px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .input-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    label {
+      font-size: 1.5em;
+      margin-bottom: .4em;
+    }
+
+    #amount {
+      width: 300px;
+      padding: 20px;
+      border-radius: 30px;
+      font-size: 3em;
+      border: 3px solid black;
+      background: transparent;
+      color: black;
+    }
+
+    #amount:focus {
+      border: 3px solid white;
+      outline: none;
+    }
+
+    ::placeholder {
+      color: rgba(0,0,0,0.6);
+      opacity: 1;
+    }
+
+    .select-option {
+      font-size: 16px;
+      color: #333;
+      padding: 20px;
+      font-weight: 700;
+      line-height: 1.3;
+      width: 100%;
+      border-radius: 20px;
+      border: 3px solid black;
+    }
+
+    button {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1.5em;
+      align-items: center;
+      background-color: black;
+      color: #fff;
+      margin-top: 30px;
+    }
+
+    .result {
+      color: black;
+      font-size: 2.5em;
+    }
+
+    .error {
+      color: #800020;
+      font-size: 12px;
+    }
+
+    .key {
+      margin-bottom: 60px;
+      color: #f17b55;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .select-option {
+        width: 100%;
+        font-size: 10px;
+      }
+
+      #amount {
+        width: 100%;
+        font-size: 12px;
+      }
+
+      .box {
+        width: 100%;
+        padding: 0px 10px;
+      }
+
+      body {
+        font-size: 12px;
+      }
+
+      .container p,
+      .container label,
+      .container input,
+      .container select,
+      .container span,
+      .container button,
+      .container .result {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="key">
+      <p>Expense  Tracker</p>
+    </div>
+
+    <div class="currency-container">
+      <h1>Currency<br>Converter</h1>
+      <div class="input-box">
+        <label for="amount">Enter amount</label>
+        <input type="text" id="amount" placeholder="100" required />
+      </div>
+      <div class="currency">
+        <div class="box">
+          <select class="select-option" id="fromCurrency"></select>
+        </div>
+        <div>
+          <span>TO</span>
+        </div>
+        <div class="box">
+          <select class="select-option" id="toCurrency"></select>
+        </div>
+        <button class="convert">Convert</button>
+        <p class="result"></p>
+        <p class="error"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const currencies = [
+      { code: "USD", name: "United States Dollar", country: "us" },
+      { code: "EUR", name: "Euro", country: "eu" },
+      { code: "GBP", name: "British Pound", country: "gb" },
+      { code: "JPY", name: "Japanese Yen", country: "jp" },
+      { code: "AUD", name: "Australian Dollar", country: "au" },
+      { code: "CAD", name: "Canadian Dollar", country: "ca" },
+      { code: "SGD", name: "Singapore Dollar", country: "sg" },
+      { code: "INR", name: "Indian Rupee", country: "in" },
+      { code: "CHF", name: "Swiss Franc", country: "ch" },
+      { code: "BND", name: "Brunei Dollar", country: "bn" },
+      { code: "MYR", name: "Malaysian Ringgit", country: "my" },
+      { code: "CNY", name: "Chinese Yuan", country: "cn" },
+      { code: "NZD", name: "New Zealand Dollar", country: "nz" },
+      { code: "ZAR", name: "South African Rand", country: "za" },
+      { code: "THB", name: "Thai Baht", country: "th" }
+    ];
+
+    const fromCurrency = document.getElementById("fromCurrency");
+    const toCurrency = document.getElementById("toCurrency");
+
+    currencies.forEach(currency => {
+      const flag = `https://flagcdn.com/24x18/${currency.country}.png`;
+      const text = `${currency.code} - ${currency.name}`;
+
+      const optionFrom = document.createElement("option");
+      optionFrom.value = currency.code;
+      optionFrom.textContent = `${currency.code} - ${currency.name}`;
+      fromCurrency.appendChild(optionFrom);
+
+      const optionTo = document.createElement("option");
+      optionTo.value = currency.code;
+      optionTo.textContent = `${currency.code} - ${currency.name}`;
+      toCurrency.appendChild(optionTo);
+    });
+
+    // Default selections
+    fromCurrency.value = "USD";
+    toCurrency.value = "EUR";
+
+    const convertBtn = document.querySelector(".convert");
+    const result = document.querySelector(".result");
+    const error = document.querySelector(".error");
+
+    const apiKey = "24faec6b42da4a96ceea41d3";
+
+    convertBtn.addEventListener("click", () => {
+      const amount = document.getElementById("amount").value;
+      const from = fromCurrency.value;
+      const to = toCurrency.value;
+
+      if (amount !== "" && parseFloat(amount) >= 1) {
+        const url = `https://v6.exchangerate-api.com/v6/${apiKey}/pair/${from}/${to}`;
+        fetch(url)
+          .then(resp => resp.json())
+          .then(data => {
+            const conversionRate = data.conversion_rate;
+            const conversionResult = (amount * conversionRate).toFixed(2);
+            const formattedResult = conversionResult.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+            result.innerHTML = `${amount} ${from} = ${formattedResult} ${to}`;
+            error.innerHTML = "";
+          })
+          .catch(() => {
+            error.textContent = "An error occurred, please try again later.";
+          });
+      } else {
+        alert("Please enter a valid amount");
+      }
+    });
+  </script>
+</body>
+</html>
