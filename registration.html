@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Signup</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(to right, #d4f3ef, #4aaf7c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wrapper {
+      background: #e8fff9;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      width: 900px;
+      max-width: 95%;
+    }
+
+    .left-panel {
+      background: url("https://images.pexels.com/photos/4386339/pexels-photo-4386339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2") center/cover no-repeat;
+      width: 100%;
+      height: 100%;
+    }
+
+    .form-container {
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4aaf7c;
+      animation: fadeSlideIn 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    form div {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #d0eae0;
+      border-radius: 10px;
+      padding: 10px;
+      gap: 10px;
+    }
+
+    form input {
+      border: none;
+      outline: none;
+      flex-grow: 1;
+      font-size: 1em;
+      background: transparent;
+      color: #333;
+    }
+
+    button[type="submit"] {
+      background: #4aaf7c;
+      color: white;
+      font-size: 1.1em;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background: #3c9364;
+    }
+
+    #error-message {
+      color: red;
+      padding: 10px;
+      text-align: center;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #4aaf7c;
+    }
+
+    .toggle-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .toggle-link a {
+      color: #4aaf7c;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 660px) {
+      .wrapper {
+        grid-template-columns: 1fr;
+        width: 90%;
+        height: auto;
+      }
+
+      .left-panel {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="left-panel"></div>
+    <div class="form-container">
+      <h1 id="form-title">Login</h1>
+      <p id="error-message"></p>
+
+      <!-- LOGIN FORM -->
+      <form id="login-form">
+        <div>
+          <label for="login-username">
+            <!-- User Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+              <path d="M480-480q66 0 113-47t47-113q0-66-47-113t-113-47q-66 0-113 47t-47 113q0 66 47 113t113 47Zm0 80q-75 0-140 37.5T240-280v40h480v-40q0-62-65-99.5T480-400Z"/>
+            </svg>
+          </label>
+          <input type="text" id="login-username" placeholder="Username" />
+        </div>
+        <div>
+          <label for="login-password">
+            <!-- Lock Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+              <path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/>
+            </svg>
+          </label>
+          <input type="password" id="login-password" placeholder="Password" />
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <input type="checkbox" id="remember-checkbox" />
+          <label for="remember-checkbox">Remember Me</label>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+
+      <!-- SIGN-UP FORM -->
+      <form id="signup-form" class="hidden">
+        <div>
+          <label for="signup-username">
+            <!-- User Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+              <path d="M480-480q66 0 113-47t47-113q0-66-47-113t-113-47q-66 0-113 47t-47 113q0 66 47 113t113 47Zm0 80q-75 0-140 37.5T240-280v40h480v-40q0-62-65-99.5T480-400Z"/>
+            </svg>
+          </label>
+          <input type="text" id="signup-username" placeholder="Username" required />
+        </div>
+        <div>
+          <label for="signup-email">
+            <!-- Email Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+              <path d="M120-160q-24 0-42-18t-18-42v-520q0-24 18-42t42-18h720q24 0 42 18t18 42v520q0 24-18 42t-42 18H120Zm360-280 360-240H120l360 240Zm0 80L120-720v520h720v-520L480-360Z"/>
+            </svg>
+          </label>
+          <input type="email" id="signup-email" placeholder="Email" required />
+        </div>
+        <div>
+          <label for="password-input">Password</label>
+          <input type="password" id="password-input" placeholder="Password" required />
+          <span id="password-strength"></span> <!-- Password strength will be displayed here -->
+        </div>
+        <div>
+          <label for="signup-repeat-password">Repeat Password</label>
+          <input type="password" id="signup-repeat-password" placeholder="Repeat Password" required />
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+
+      <div class="toggle-link">
+        <span id="toggle-text">New here? <a id="toggle-link">Create an Account</a></span>
+      </div>
+    </div>
+  </div>
+
+
+ 
+<script>
+  const loginForm = document.getElementById("login-form");
+  const signupForm = document.getElementById("signup-form");
+  const toggleLink = document.getElementById("toggle-link");
+  const toggleText = document.getElementById("toggle-text");
+  const formTitle = document.getElementById("form-title");
+  const errorMsg = document.getElementById("error-message");
+
+  // Remember Me for login
+  window.onload = function () {
+    if (localStorage.getItem("rememberMe") === "true") {
+      const remembered = localStorage.getItem("rememberedUsername");
+      if (remembered) {
+        document.getElementById("login-username").value = remembered;
+        document.getElementById("remember-checkbox").checked = true;
+      }
+    }
+  };
+
+  // Toggle Forms
+  toggleLink.addEventListener("click", () => {
+    const loginVisible = !loginForm.classList.contains("hidden");
+    loginForm.classList.toggle("hidden");
+    signupForm.classList.toggle("hidden");
+    formTitle.innerText = loginVisible ? "Sign Up" : "Login";
+    toggleText.innerHTML = loginVisible
+      ? 'Already have an account? <a id="toggle-link">Login</a>'
+      : 'New here? <a id="toggle-link">Create an Account</a>';
+    document.getElementById("toggle-link").addEventListener("click", () => toggleLink.click());
+  });
+
+  // Sign Up 
+  signupForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const username = document.getElementById("signup-username").value;
+    const email = document.getElementById("signup-email").value;
+    const password = document.getElementById("password-input").value;
+    const repeatPassword = document.getElementById("signup-repeat-password").value;
+
+    if (password !== repeatPassword) {
+      errorMsg.textContent = "Passwords do not match.";
+      return;
+    }
+
+    const user = { username, email, password };
+    localStorage.setItem(username, JSON.stringify(user));
+    alert("Account created! You can now log in.");
+    signupForm.reset();
+    toggleLink.click(); // 
+  });
+
+  // Login 
+  loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const username = document.getElementById("login-username").value;
+    const password = document.getElementById("login-password").value;
+    const rememberMe = document.getElementById("remember-checkbox").checked;
+
+    const userData = localStorage.getItem(username);
+    if (!userData) {
+      errorMsg.textContent = "User not found.";
+      return;
+    }
+
+    const user = JSON.parse(userData);
+    if (user.password !== password) {
+      errorMsg.textContent = "Incorrect password.";
+      return;
+    }
+
+    if (rememberMe) {
+      localStorage.setItem("rememberMe", "true");
+      localStorage.setItem("rememberedUsername", username);
+    } else {
+      localStorage.removeItem("rememberMe");
+      localStorage.removeItem("rememberedUsername");
+    }
+
+    errorMsg.textContent = "";
+    alert("Login successful!");
+    loginForm.reset();
+  });
+
+  // for the password streng level
+  document.addEventListener("DOMContentLoaded", function () {
+    const passwordInput = document.getElementById("password-input");
+    const strengthText = document.getElementById("password-strength");
+
+    passwordInput.addEventListener("input", function () {
+      const val = passwordInput.value;
+      const strength = getPasswordStrength(val);
+      strengthText.textContent = strength.label;
+      strengthText.style.color = strength.color;
+    });
+
+    function getPasswordStrength(password) {
+      let score = 0;
+      if (password.length >= 6) score++;
+      if (/[A-Z]/.test(password)) score++;
+      if (/[0-9]/.test(password)) score++;
+      if (/[^A-Za-z0-9]/.test(password)) score++;
+      if (score <= 1) return { label: "Weak", color: "red" };
+      if (score === 2 || score === 3) return { label: "Medium", color: "orange" };
+      return { label: "Strong", color: "green" };
+    }
+  });
+  //locked after 3 incorrect attempt
+let attempt = 3; 
+let lockoutTimer = null;
+
+loginForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const usernameInput = document.getElementById("login-username");
+  const passwordInput = document.getElementById("login-password");
+  const username = usernameInput.value;
+  const password = passwordInput.value;
+  const rememberMe = document.getElementById("remember-checkbox").checked;
+
+  const userData = localStorage.getItem(username);
+
+  if (!userData) {
+    errorMsg.textContent = "User not found.";
+    handleFailedAttempt(usernameInput, passwordInput);
+    return; // Exit early if the user is not found
+  }
+
+  const user = JSON.parse(userData);
+  if (user.password !== password) {
+    errorMsg.textContent = "Incorrect password.";
+    handleFailedAttempt(usernameInput, passwordInput);
+    return; 
+  }
+
+  // Successful login
+  if (user.password === password) {
+    if (rememberMe) {
+      localStorage.setItem("rememberMe", "true");
+      localStorage.setItem("rememberedUsername", username);
+    } else {
+      localStorage.removeItem("rememberMe");
+      localStorage.removeItem("rememberedUsername");
+    }
+
+    errorMsg.textContent = "";
+    alert("Login successful!");
+    loginForm.reset();
+    attempt = 3; // 
+    return; // 
+  }
+});
+
+function handleFailedAttempt(usernameInput, passwordInput) {
+  attempt--;
+  if (attempt > 0) {
+    alert(`Invalid login. You have ${attempt} attempt(s) left.`);
+  }
+
+  if (attempt === 0) {
+    errorMsg.textContent = "Too many failed attempts. Try again in 1 minute.";
+    usernameInput.disabled = true;
+    passwordInput.disabled = true;
+    loginForm.querySelector('button[type="submit"]').disabled = true;
+
+    //  1-minute lockout timer
+    lockoutTimer = setTimeout(() => {
+      usernameInput.disabled = false;
+      passwordInput.disabled = false;
+      loginForm.querySelector('button[type="submit"]').disabled = false;
+      errorMsg.textContent = "";
+      attempt = 3;
+    }, 60000); // 60,000ms = 1 minute
+  }
+}
+
+</script>
+</body>
+</html>
+
+<!-- https://www.codingnepalweb.com/create-glassmorphism-login-form-html-css/
+https://www.w3schools.com/howto/howto_css_form_icon.asp
+https://javascript.info/event-delegation
+https://www.geeksforgeeks.org/program-check-strength-password/
+https://www.sourcecodester.com/tutorials/javascript/13502/javascript-login-form-limited-attempts.html
+ -->
